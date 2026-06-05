@@ -36,3 +36,6 @@ coverage/
 
 # Artifacts
 *.tgz
+
+# Knowledge graph output (graphify)
+graphify-out/
