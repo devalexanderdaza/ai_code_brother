@@ -368,7 +368,7 @@ Always follow the patterns documented in the linked skills when making changes.
     const filePath = path.join(githubDir, "copilot-instructions.md");
     const relativePath = ".github/copilot-instructions.md";
 
-    const managedBlock = buildCopilotInstructions(analysis);
+    const managedBlock = buildCopilotInstructions(analysis, await this.readEngramProject());
 
     let finalContent = managedBlock;
 
@@ -387,6 +387,17 @@ Always follow the patterns documented in the linked skills when making changes.
     }
 
     return relativePath;
+  }
+
+  /** engram project name from .engram/config.json, when the repo is wired to engram. */
+  private async readEngramProject(): Promise<string | undefined> {
+    try {
+      const raw = await fs.readFile(path.join(this.rootPath, ".engram", "config.json"), "utf-8");
+      const config = JSON.parse(raw) as { project_name?: string };
+      return typeof config.project_name === "string" ? config.project_name : undefined;
+    } catch {
+      return undefined;
+    }
   }
 
   private async generateHook(hook: HookDefinition, hooksDir: string): Promise<string> {

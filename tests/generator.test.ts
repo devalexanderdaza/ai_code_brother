@@ -9,6 +9,7 @@ vi.mock("fs/promises", () => ({
   default: {
     mkdir: vi.fn(),
     writeFile: vi.fn(),
+    readFile: vi.fn(),
   },
 }));
 
@@ -18,11 +19,13 @@ import type { AnalysisResult, SkillDefinition, AgentDefinition, HookDefinition }
 
 const mockMkdir = vi.mocked(fs.mkdir);
 const mockWriteFile = vi.mocked(fs.writeFile);
+const mockReadFile = vi.mocked(fs.readFile);
 
 beforeEach(() => {
   vi.resetAllMocks();
   mockMkdir.mockResolvedValue(undefined);
   mockWriteFile.mockResolvedValue(undefined);
+  mockReadFile.mockRejectedValue(Object.assign(new Error("ENOENT"), { code: "ENOENT" }));
 });
 
 // ---------------------------------------------------------------------------
@@ -372,5 +375,58 @@ describe("Generator — toTitleCase", () => {
     );
     const content = writeCall![1] as string;
     expect(content).toContain("# Patterns");
+  });
+});
+
+// ---------------------------------------------------------------------------
+// Memory Protocol section in copilot-instructions.md
+// ---------------------------------------------------------------------------
+
+describe("Generator — Memory Protocol (engram)", () => {
+  function instructionsContent(): string {
+    const writeCall = mockWriteFile.mock.calls.find((c) =>
+      (c[0] as string).endsWith("copilot-instructions.md"),
+    );
+    expect(writeCall).toBeDefined();
+    return writeCall![1] as string;
+  }
+
+  it("emits the Memory Protocol section when .engram/config.json pins a project", async () => {
+    mockReadFile.mockImplementation(async (p) => {
+      if (String(p).endsWith(".engram/config.json")) {
+        return JSON.stringify({ project_name: "my-app" });
+      }
+      throw Object.assign(new Error("ENOENT"), { code: "ENOENT" });
+    });
+
+    const gen = new Generator("/project");
+    await gen.generate(makeAnalysis());
+
+    const content = instructionsContent();
+    expect(content).toContain("## Memory Protocol (Engram)");
+    expect(content).toContain("mem_search");
+    expect(content).toContain("mem_save");
+    expect(content).toContain("`my-app`");
+  });
+
+  it("omits the section when the repo has no engram config", async () => {
+    const gen = new Generator("/project");
+    await gen.generate(makeAnalysis());
+
+    const content = instructionsContent();
+    expect(content).not.toContain("Memory Protocol");
+  });
+
+  it("omits the section when .engram/config.json is malformed", async () => {
+    mockReadFile.mockImplementation(async (p) => {
+      if (String(p).endsWith(".engram/config.json")) return "{ broken";
+      throw Object.assign(new Error("ENOENT"), { code: "ENOENT" });
+    });
+
+    const gen = new Generator("/project");
+    await gen.generate(makeAnalysis());
+
+    const content = instructionsContent();
+    expect(content).not.toContain("Memory Protocol");
   });
 });

@@ -12,8 +12,10 @@ const MANAGED_END = "<!-- /agentsmith:managed -->";
 /**
  * Build the managed copilot-instructions.md content from analysis results.
  * Kept factual - all data derived from the AnalysisResult, nothing hallucinated.
+ * When the target repo has engram memory configured (engramProject set),
+ * a Memory Protocol section is emitted so Copilot uses the mem_* tools.
  */
-export function buildCopilotInstructions(analysis: AnalysisResult): string {
+export function buildCopilotInstructions(analysis: AnalysisResult, engramProject?: string): string {
   const sections: string[] = [];
 
   sections.push(MANAGED_START);
@@ -76,6 +78,23 @@ export function buildCopilotInstructions(analysis: AnalysisResult): string {
     for (const tool of toolEntries) {
       sections.push(`- \`${tool.command}\` -- ${tool.description}`);
     }
+    sections.push("");
+  }
+
+  // 7. Memory Protocol (only when the repo is wired to engram)
+  if (engramProject) {
+    sections.push("## Memory Protocol (Engram)");
+    sections.push("");
+    sections.push(
+      "This project uses [engram](https://github.com/Gentleman-Programming/engram) for persistent, cross-agent memory via MCP.",
+    );
+    sections.push("");
+    sections.push("- **Search first:** before starting work, recall relevant context with `mem_search` or `mem_context`.");
+    sections.push("- **Save proactively:** after significant work (bugfixes, decisions, lessons learned), call `mem_save` with What/Why/Where/Learned.");
+    sections.push("- **Survive compaction:** after a context reset, call `mem_context` to recover state.");
+    sections.push(
+      `- **Project scope:** this repo is pinned to the engram project \`${engramProject}\` via \`.engram/config.json\`.`,
+    );
     sections.push("");
   }
 
