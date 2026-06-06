@@ -6,6 +6,7 @@
 import { CopilotClient, approveAll } from "@github/copilot-sdk";
 import type { GitHubFile } from "../github/index.js";
 import { GitHubClient } from "../github/index.js";
+import { selectModel } from "./model.js";
 import type { AnalysisResult, SkillDefinition, AgentDefinition } from "./types.js";
 import {
   flattenAgents,
@@ -46,10 +47,12 @@ const CONFIG_FILES = [
 
 export class RemoteAnalyzer {
   private verbose: boolean;
+  private modelOverride?: string;
   private github: GitHubClient;
 
-  constructor(repoUrl: string, verbose = false) {
+  constructor(repoUrl: string, verbose = false, modelOverride?: string) {
     this.verbose = verbose;
+    this.modelOverride = modelOverride;
     this.github = new GitHubClient(repoUrl, verbose);
   }
 
@@ -111,8 +114,10 @@ export class RemoteAnalyzer {
         console.log("  [SDK] Creating session...");
       }
 
+      const model = await selectModel(client, this.modelOverride, this.verbose);
+
       const session = await client.createSession({
-        model: "gpt-5",
+        model,
         streaming: true,
         systemMessage: {
           content: this.getSystemPrompt(),

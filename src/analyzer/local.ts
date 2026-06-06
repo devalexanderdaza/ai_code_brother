@@ -8,6 +8,7 @@ import { CopilotClient, approveAll } from "@github/copilot-sdk";
 import fs from "fs/promises";
 import path from "path";
 import type { ScanResult } from "../scanner/index.js";
+import { selectModel } from "./model.js";
 import type { AnalysisResult, SkillDefinition, ToolDefinition, AgentDefinition } from "./types.js";
 import {
   flattenAgents,
@@ -23,10 +24,12 @@ import {
 
 export class Analyzer {
   private verbose: boolean;
+  private modelOverride?: string;
   private client: CopilotClient | null = null;
 
-  constructor(verbose = false) {
+  constructor(verbose = false, modelOverride?: string) {
     this.verbose = verbose;
+    this.modelOverride = modelOverride;
   }
 
   async analyze(scanResult: ScanResult): Promise<AnalysisResult> {
@@ -57,8 +60,10 @@ export class Analyzer {
     }
 
     try {
+      const model = await selectModel(this.client, this.modelOverride, this.verbose);
+
       if (this.verbose) {
-        console.log("  [SDK] Creating session with model: gpt-5...");
+        console.log(`  [SDK] Creating session with model: ${model}...`);
       }
 
       // Detect potential domain boundaries for system prompt
@@ -66,7 +71,7 @@ export class Analyzer {
 
       // Create a session with custom tools for analysis
       const session = await this.client.createSession({
-        model: "gpt-5",
+        model,
         streaming: true,
         systemMessage: {
           content: getSystemPrompt(scanResult.language, domains),

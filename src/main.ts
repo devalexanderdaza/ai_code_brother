@@ -53,6 +53,7 @@ program
   .option("-o, --output <path>", "Output directory for generated assets")
   .option("--no-instructions", "Skip generation of .github/copilot-instructions.md")
   .option("--single-agent", "Generate a single agent.md instead of multi-agent constellation (v0.3 compat)")
+  .option("-m, --model <id>", "Copilot model to use for analysis (default: best available in your subscription)")
   .addHelpText("after", `
 ${chalk.bold("Examples:")}
   $ aicb assimilate .                                      # Local repository (multi-agent)

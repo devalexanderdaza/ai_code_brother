@@ -18,6 +18,7 @@ interface AssimilateOptions {
   output?: string;
   instructions?: boolean;
   singleAgent?: boolean;
+  model?: string;
 }
 
 export async function assimilateCommand(
@@ -30,7 +31,7 @@ export async function assimilateCommand(
     // Use new remote analyzer - no cloning!
     console.log(chalk.green("\n[ANALYZE]"), `Analyzing ${getRepoName(target)} via GitHub API...`);
     
-    const analyzer = new RemoteAnalyzer(target, options.verbose);
+    const analyzer = new RemoteAnalyzer(target, options.verbose, options.model);
     const result = await analyzer.analyze();
 
     if (options.verbose) {
@@ -137,7 +138,7 @@ async function assimilateLocal(target: string, options: AssimilateOptions): Prom
 
     console.log(chalk.green("\n[ANALYZE]"), "Copilot SDK analysis in progress...");
 
-    const analyzer = new Analyzer(options.verbose);
+    const analyzer = new Analyzer(options.verbose, options.model);
     const analysisResult = await analyzer.analyze(scanResult);
 
     if (options.verbose) {
