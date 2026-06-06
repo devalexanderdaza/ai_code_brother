@@ -106,11 +106,21 @@ export async function assimilateCommand(
       console.log(chalk.yellow("\nDry run - no files were written."));
     } else {
       console.log(chalk.gray("\nYour repository has been assimilated.\n"));
+      await suggestMemorySetup(outputPath);
     }
 
   } else {
     // Local path - use original flow with cloning
     await assimilateLocal(target, options);
+  }
+}
+
+/** One-line hint when the project has no engram memory configured yet. */
+async function suggestMemorySetup(rootPath: string): Promise<void> {
+  const { detectEngram } = await import("../engram/index.js");
+  const status = await detectEngram(rootPath);
+  if (!status.projectPinned) {
+    console.log(chalk.gray("Tip: run `aicb init` to enable persistent memory (engram).\n"));
   }
 }
 
@@ -207,6 +217,7 @@ async function assimilateLocal(target: string, options: AssimilateOptions): Prom
       console.log(chalk.yellow("\nDry run - no files were written."));
     } else {
       console.log(chalk.gray("\nYour repository has been assimilated.\n"));
+      await suggestMemorySetup(outputPath);
     }
   } finally {
     if (resolved.isTemporary) {

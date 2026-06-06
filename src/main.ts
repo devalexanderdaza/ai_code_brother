@@ -9,6 +9,7 @@
 import { Command } from "commander";
 import chalk from "chalk";
 import { assimilateCommand } from "./commands/assimilate.js";
+import { initCommand } from "./commands/init.js";
 import { searchCommand } from "./commands/search.js";
 import { validateCommand } from "./commands/validate.js";
 
@@ -72,6 +73,37 @@ ${chalk.bold("Generated assets:")}
   skills-registry.jsonl            - Searchable index
 `)
   .action(assimilateCommand);
+
+program
+  .command("init")
+  .description("Configure persistent cross-agent memory (engram) for a project")
+  .argument("[path]", "Path to repository (default: current directory)", ".")
+  .option("-n, --dry-run", "Preview every action without modifying anything")
+  .option("-y, --yes", "Non-interactive: accept safe defaults (never installs or touches global configs)")
+  .option("--engram", "Enable engram integration without asking (installs if missing)")
+  .option("--no-engram", "Skip engram integration without asking")
+  .option("--engram-project <name>", "engram project name (skips derivation and confirmation)")
+  .option("--setup-tools <list>", "Comma-separated CLIs to configure via engram setup (claude-code,opencode,gemini-cli,codex)")
+  .option("--mcp <list>", "Comma-separated workspace MCP configs to write (vscode,cursor)")
+  .option("--git-sync", "Enable engram git sync (memory chunks committed to .engram/)")
+  .option("-v, --verbose", "Show detailed output")
+  .addHelpText("after", `
+${chalk.bold("Examples:")}
+  $ aicb init                                          # Interactive setup
+  $ aicb init --dry-run                                # Preview all actions
+  $ aicb init -y                                       # Safe non-interactive defaults
+  $ aicb init --engram --engram-project my-app         # Scripted full setup
+  $ aicb init --engram --setup-tools claude-code --mcp vscode,cursor
+
+${chalk.bold("What it does (all idempotent, all opt-in):")}
+  • Detects engram, agent CLIs and existing configs before acting
+  • Installs engram (Homebrew) only with approval
+  • Pins the project name in .engram/config.json (derived from your manifest)
+  • Runs engram setup for the agent CLIs you select
+  • Writes workspace MCP configs (.vscode/mcp.json, .cursor/mcp.json) on request
+  • Inserts the Memory Protocol section in CLAUDE.md / AGENTS.md
+`)
+  .action(initCommand);
 
 program
   .command("search")
