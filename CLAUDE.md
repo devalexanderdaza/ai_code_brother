@@ -198,3 +198,14 @@ npx @claude-flow/cli@latest doctor --fix
 
 - Documentation: https://github.com/ruvnet/claude-flow
 - Issues: https://github.com/ruvnet/claude-flow/issues
+
+<!-- engram:start -->
+## Memory Protocol (Engram)
+
+This project uses [engram](https://github.com/Gentleman-Programming/engram) for persistent, cross-agent memory.
+
+- **Search first**: before starting work, recall relevant context with `mem_search` or `mem_context`.
+- **Save proactively**: after significant work (bugfixes, decisions, lessons learned), call `mem_save` with What/Why/Where/Learned.
+- **Survive compaction**: after a context reset or compaction, call `mem_context` to recover state.
+- **Project scope**: this repo is pinned to the engram project `ai-code-brother` via `.engram/config.json`. On `ambiguous_project` errors, retry with explicit `project` - never guess.
+<!-- engram:end -->
