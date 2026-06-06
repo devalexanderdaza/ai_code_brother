@@ -1,5 +1,5 @@
 /**
- * Local Analyzer - The Mind of Agent Smith
+ * Local Analyzer - The Mind of AI Code Brother
  * Uses GitHub Copilot SDK to perform deep semantic analysis of a local repository.
  * "The best thing about being me... there are so many of me."
  */

@@ -1,5 +1,5 @@
 /**
- * Scanner - The Eye of Agent Smith
+ * Scanner - The Eye of AI Code Brother
  * Enumerates repository structure, detects language/framework, finds config files.
  */
 

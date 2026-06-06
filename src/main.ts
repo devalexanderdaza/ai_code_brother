@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Agent Smith CLI
+ * AI Code Brother CLI
  * "The best thing about being me... there are so many of me."
  *
  * Assimilate any repository into a fully autonomous GitHub Copilot agent.
@@ -16,24 +16,24 @@ const program = new Command();
 
 const banner = `
 ${chalk.green("╔═══════════════════════════════════════════════════════════════════╗")}
-${chalk.green("║")}                          ${chalk.bold.white("AGENT SMITH")}                              ${chalk.green("║")}
+${chalk.green("║")}                       ${chalk.bold.white("AI CODE BROTHER")}                             ${chalk.green("║")}
 ${chalk.green("║")}              ${chalk.gray('"The best thing about being me...')}                   ${chalk.green("║")}
 ${chalk.green("║")}                   ${chalk.gray('there are so many of me."')}                        ${chalk.green("║")}
 ${chalk.green("╚═══════════════════════════════════════════════════════════════════╝")}
 `;
 
 program
-  .name("agentsmith")
+  .name("ai-code-brother")
   .description("Assimilate any repository into a fully autonomous GitHub Copilot agent")
-  .version("0.3.0")
+  .version("0.4.0")
   .addHelpText("beforeAll", banner)
   .addHelpText("after", `
 ${chalk.bold("Examples:")}
-  $ agentsmith assimilate .                                    # Analyze current directory
-  $ agentsmith assimilate https://github.com/expressjs/express # Analyze remote repo
-  $ agentsmith assimilate . --dry-run --verbose                # Preview with details
-  $ agentsmith search "routing"                                # Search skills registry
-  $ agentsmith validate                                        # Validate generated assets
+  $ aicb assimilate .                                    # Analyze current directory
+  $ aicb assimilate https://github.com/expressjs/express # Analyze remote repo
+  $ aicb assimilate . --dry-run --verbose                # Preview with details
+  $ aicb search "routing"                                # Search skills registry
+  $ aicb validate                                        # Validate generated assets
 
 ${chalk.bold("Requirements:")}
   • Node.js 18+
@@ -41,7 +41,7 @@ ${chalk.bold("Requirements:")}
   • Copilot CLI installed and in PATH
 
 ${chalk.bold("Documentation:")}
-  https://github.com/shyamsridhar123/agentsmith-cli
+  https://github.com/devalexanderdaza/ai_code_brother
 `);
 
 program
@@ -55,12 +55,12 @@ program
   .option("--single-agent", "Generate a single agent.md instead of multi-agent constellation (v0.3 compat)")
   .addHelpText("after", `
 ${chalk.bold("Examples:")}
-  $ agentsmith assimilate .                                      # Local repository (multi-agent)
-  $ agentsmith assimilate ~/projects/myapp                       # Specific path
-  $ agentsmith assimilate https://github.com/expressjs/express   # GitHub URL
-  $ agentsmith assimilate . --dry-run                            # Preview mode
-  $ agentsmith assimilate . -o ./output                          # Custom output
-  $ agentsmith assimilate . --single-agent                       # Single agent (v0.3 compat)
+  $ aicb assimilate .                                      # Local repository (multi-agent)
+  $ aicb assimilate ~/projects/myapp                       # Specific path
+  $ aicb assimilate https://github.com/expressjs/express   # GitHub URL
+  $ aicb assimilate . --dry-run                            # Preview mode
+  $ aicb assimilate . -o ./output                          # Custom output
+  $ aicb assimilate . --single-agent                       # Single agent (v0.3 compat)
 
 ${chalk.bold("Generated assets:")}
   .github/copilot-instructions.md  - Workspace-wide Copilot instructions
@@ -80,9 +80,9 @@ program
   .option("-t, --type <type>", "Filter by type: skill, agent, or hook")
   .addHelpText("after", `
 ${chalk.bold("Examples:")}
-  $ agentsmith search "routing"              # Search all assets
-  $ agentsmith search "test" --type skill    # Only skills
-  $ agentsmith search "api" --limit 5        # Limit results
+  $ aicb search "routing"              # Search all assets
+  $ aicb search "test" --type skill    # Only skills
+  $ aicb search "api" --limit 5        # Limit results
 `)
   .action(searchCommand);
 
@@ -99,9 +99,9 @@ ${chalk.bold("Checks performed:")}
   • Registry entries are valid JSON with required fields
 
 ${chalk.bold("Examples:")}
-  $ agentsmith validate                      # Current directory
-  $ agentsmith validate ./my-project         # Specific path
-  $ agentsmith validate --verbose            # Detailed output
+  $ aicb validate                      # Current directory
+  $ aicb validate ./my-project         # Specific path
+  $ aicb validate --verbose            # Detailed output
 `)
   .action(validateCommand);
 

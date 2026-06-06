@@ -266,7 +266,7 @@ export class RemoteAnalyzer {
   }
 
   private getSystemPrompt(): string {
-    return `You are Agent Smith, an AI designed to assimilate repositories into agent hierarchies.
+    return `You are AI Code Brother, an AI designed to assimilate repositories into agent hierarchies.
 
 Analyze the repository and extract:
 1. SKILLS - Reusable patterns and capabilities (aim for 5-15 skills per repo)

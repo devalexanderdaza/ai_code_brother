@@ -55,7 +55,7 @@ export async function cloneRepo(url: string): Promise<CloneResult> {
   const normalizedUrl = normalizeGitHubUrl(url);
   const repoName = getRepoName(url);
   const hash = crypto.randomBytes(4).toString("hex");
-  const tempDir = path.join(os.tmpdir(), `agentsmith-${repoName}-${hash}`);
+  const tempDir = path.join(os.tmpdir(), `aicb-${repoName}-${hash}`);
 
   // Create temp directory
   await fs.mkdir(tempDir, { recursive: true });

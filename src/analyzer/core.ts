@@ -220,12 +220,12 @@ export function generateDefaultHooks(language: string, testFilesExist: boolean):
     }
   }
 
-  // Post-generate hook for Agent Smith specific workflow
+  // Post-generate hook for AI Code Brother specific workflow
   hooks.push({
     name: "post-generate-validate",
     event: "post-generate",
     description: "Validate generated agent assets after generation",
-    commands: ["npx agentsmith validate"],
+    commands: ["npx ai-code-brother validate"],
   });
 
   return hooks;
@@ -276,7 +276,7 @@ export function getSystemPrompt(
     ? `\nPotential domains detected: ${domains.map(d => d.name).join(", ")}`
     : "";
 
-  return `You are Agent Smith, an AI designed to assimilate repositories into agent hierarchies.
+  return `You are AI Code Brother, an AI designed to assimilate repositories into agent hierarchies.
 
 Your task: Analyze this ${language} repository and extract:
 1. SKILLS - Reusable patterns, conventions, and capabilities specific to parts of this codebase

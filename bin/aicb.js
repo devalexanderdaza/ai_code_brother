@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * Agent Smith CLI Entry Point
+ * AI Code Brother CLI Entry Point
  * Uses tsx to run TypeScript directly (avoids bundling issues with SDK)
  */
 

@@ -1,11 +1,12 @@
 {
-  "name": "agentsmith-cli",
+  "name": "ai-code-brother",
   "version": "0.4.0",
   "description": "Turn any GitHub repo into a multi-agent AI system for VS Code Copilot. Generates orchestrators, sub-agents, skills, handoffs, and copilot-instructions.md.",
   "type": "module",
   "main": "dist/main.js",
   "bin": {
-    "agentsmith": "./bin/agentsmith.js"
+    "ai-code-brother": "./bin/aicb.js",
+    "aicb": "./bin/aicb.js"
   },
   "files": [
     "dist",
@@ -42,15 +43,15 @@
     "typescript",
     "automation"
   ],
-  "author": "",
+  "author": "Alexander Daza <dev.alexander.daza@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shyamsridhar123/agentsmith-cli.git"
+    "url": "git+https://github.com/devalexanderdaza/ai_code_brother.git"
   },
-  "homepage": "https://github.com/shyamsridhar123/agentsmith-cli",
+  "homepage": "https://github.com/devalexanderdaza/ai_code_brother",
   "bugs": {
-    "url": "https://github.com/shyamsridhar123/agentsmith-cli/issues"
+    "url": "https://github.com/devalexanderdaza/ai_code_brother/issues"
   },
   "dependencies": {
     "@github/copilot-sdk": "^0.1.33-preview.2",

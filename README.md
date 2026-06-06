@@ -1,6 +1,6 @@
-# Agent Smith
+# AI Code Brother
 
-[![npm version](https://img.shields.io/npm/v/agentsmith.svg?style=flat-square)](https://www.npmjs.com/package/agentsmith)
+[![npm version](https://img.shields.io/npm/v/ai-code-brother.svg?style=flat-square)](https://www.npmjs.com/package/ai-code-brother)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-169%20passing-brightgreen?style=flat-square)](tests/)
 [![GitHub Copilot](https://img.shields.io/badge/GitHub%20Copilot-SDK-blue?style=flat-square&logo=github)](https://github.com/github/copilot-sdk)
@@ -11,7 +11,7 @@
 >
 > *— Agent Smith*
 
-**Agent Smith** turns any GitHub repository into a fully autonomous multi-agent ecosystem for GitHub Copilot. One command. Many agents. Total assimilation.
+**AI Code Brother** (a fork of [agentsmith-cli](https://github.com/shyamsridhar123/agentsmith-cli)) turns any GitHub repository into a fully autonomous multi-agent ecosystem for GitHub Copilot. One command. Many agents. Total assimilation.
 
 Point it at a repo — local or remote — and it produces a **constellation of specialized AI agents**, each with domain-specific skills, tools, and delegation handoffs that work natively in VS Code Copilot Chat.
 
@@ -19,13 +19,13 @@ Point it at a repo — local or remote — and it produces a **constellation of 
   <img src="public/images/agent-smith.gif" alt="Agent Smith" width="400"/>
 </p>
 
-## Why Agent Smith?
+## Why AI Code Brother?
 
-GitHub Copilot's [custom agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents) are powerful, but building them by hand is tedious — you need to understand the codebase, identify domains, write skill docs, wire up tools, and create handoff graphs. Agent Smith automates all of it.
+GitHub Copilot's [custom agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents) are powerful, but building them by hand is tedious — you need to understand the codebase, identify domains, write skill docs, wire up tools, and create handoff graphs. AI Code Brother automates all of it.
 
 **Before:** Manually writing `.agent.md` files, guessing which skills matter, hoping you covered all the domains.
 
-**After:** `agentsmith assimilate .` → A root orchestrator, domain-specific sub-agents, skill files, lifecycle hooks, a searchable registry, and a copilot-instructions.md — all generated in seconds.
+**After:** `aicb assimilate .` → A root orchestrator, domain-specific sub-agents, skill files, lifecycle hooks, a searchable registry, and a copilot-instructions.md — all generated in seconds.
 
 ## Features
 
@@ -47,22 +47,22 @@ GitHub Copilot's [custom agents](https://code.visualstudio.com/docs/copilot/cust
 
 ```bash
 # Install
-npm install github:shyamsridhar123/agentsmith-cli
+npm install github:devalexanderdaza/ai_code_brother
 
 # Assimilate a local repo
-npx agentsmith assimilate .
+npx aicb assimilate .
 
 # Assimilate a remote repo (no clone needed)
-npx agentsmith assimilate https://github.com/expressjs/express
+npx aicb assimilate https://github.com/expressjs/express
 
 # Preview without writing files
-npx agentsmith assimilate . --dry-run --verbose
+npx aicb assimilate . --dry-run --verbose
 
 # Search the generated registry
-npx agentsmith search "routing"
+npx aicb search "routing"
 
 # Validate generated assets
-npx agentsmith validate
+npx aicb validate
 ```
 
 ## What Gets Generated
@@ -90,7 +90,7 @@ skills-registry.jsonl              # Searchable index
 
 ### Multi-Agent Hierarchy
 
-Agent Smith creates hierarchical agent structures with proper delegation:
+AI Code Brother creates hierarchical agent structures with proper delegation:
 
 ```
 repo-root (orchestrator)
@@ -111,7 +111,7 @@ Sub-agents are specialists — they know their domain, their files, and their pa
 For simpler repos, or if you prefer the v0.3 behavior:
 
 ```bash
-npx agentsmith assimilate . --single-agent
+npx aicb assimilate . --single-agent
 ```
 
 This generates one `.agent.md` with all skills and tools — no sub-agents, no handoffs.
@@ -123,7 +123,7 @@ This generates one `.agent.md` with all skills and tools — no sub-agents, no h
 Analyze a repository and generate agent assets.
 
 ```bash
-agentsmith assimilate <path|url> [options]
+aicb assimilate <path|url> [options]
 
 Options:
   -n, --dry-run           Preview changes without writing files
@@ -137,7 +137,7 @@ Options:
 Search the skills and agents registry.
 
 ```bash
-agentsmith search <query> [options]
+aicb search <query> [options]
 
 Options:
   -l, --limit <n>     Maximum results (default: 10)
@@ -149,7 +149,7 @@ Options:
 Validate generated agent assets for correctness.
 
 ```bash
-agentsmith validate [path] [options]
+aicb validate [path] [options]
 
 Options:
   -v, --verbose       Show detailed validation output
@@ -160,7 +160,7 @@ Checks: valid frontmatter, required fields, skill references, hook events, regis
 ## Example
 
 ```
-$ agentsmith assimilate https://github.com/pedroslopez/whatsapp-web.js
+$ aicb assimilate https://github.com/pedroslopez/whatsapp-web.js
 
 ╔═══════════════════════════════════════════════════════════════════╗
 ║                          AGENT SMITH                              ║
@@ -224,7 +224,7 @@ src/
 ## How It Works
 
 ```
-Repository              Agent Smith                    VS Code
+Repository              AI Code Brother                    VS Code
 ─────────              ───────────                    ───────
                   ┌─────────────────────┐
   Local path  ──▶ │  Scanner            │
@@ -262,7 +262,7 @@ The SDK authenticates automatically through your GitHub CLI credentials. No API 
 
 ## License Policy
 
-Agent Smith enforces responsible use by only assimilating repositories with permissive open-source licenses:
+AI Code Brother enforces responsible use by only assimilating repositories with permissive open-source licenses:
 
 **Supported:** MIT, ISC, Unlicense, CC0, Apache-2.0, MPL-2.0, BSD-2-Clause, BSD-3-Clause, 0BSD, GPL-2.0, GPL-3.0, LGPL, AGPL, WTFPL, Zlib, BlueOak-1.0.0
 
@@ -271,7 +271,7 @@ Agent Smith enforces responsible use by only assimilating repositories with perm
 Detection sources: LICENSE/LICENCE/COPYING files, `package.json`, `pyproject.toml`.
 
 > [!WARNING]
-> **Respect Copyright** — Agent Smith analyzes repositories to extract patterns. Always ensure you have the right to analyze and use code from any repository you target. Do not use this tool to extract or redistribute proprietary code without permission.
+> **Respect Copyright** — AI Code Brother analyzes repositories to extract patterns. Always ensure you have the right to analyze and use code from any repository you target. Do not use this tool to extract or redistribute proprietary code without permission.
 
 ## Contributing
 
@@ -279,8 +279,8 @@ Contributions welcome! Please read our [Philosophy](docs/PHILOSOPHY.md) to under
 
 ```bash
 # Development
-git clone https://github.com/shyamsridhar123/agentsmith-cli.git
-cd agentsmith-cli
+git clone https://github.com/devalexanderdaza/ai_code_brother.git
+cd ai_code_brother
 npm install
 npm run dev      # Watch mode
 npm test         # 169 tests
@@ -291,11 +291,11 @@ npm run build    # Production build
 
 If this project helps you build smarter AI agents, consider giving it a star.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=shyamsridhar123/agentsmith-cli&type=Date)](https://star-history.com/#shyamsridhar123/agentsmith-cli&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=devalexanderdaza/ai_code_brother&type=Date)](https://star-history.com/#devalexanderdaza/ai_code_brother&Date)
 
 ## Related Projects
 
-- [GitHub Copilot SDK](https://github.com/github/copilot-sdk) — The cognitive engine powering Agent Smith
+- [GitHub Copilot SDK](https://github.com/github/copilot-sdk) — The cognitive engine powering AI Code Brother
 - [VS Code Custom Agents](https://code.visualstudio.com/docs/copilot/customization/custom-agents) — The specification for generated agents
 - [Zod](https://github.com/colinhacks/zod) — Schema validation for LLM output
 
