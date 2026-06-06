@@ -38,6 +38,18 @@
 - **HNSW**: Enabled
 - **Neural**: Enabled
 
+## Git Workflow (Always Enforced)
+
+- **Git Flow is mandatory** for all work in this repository:
+  - Use `git flow` (git-flow-next) when available (`command -v git-flow`); the repo is already initialized (`git config --get-regexp '^gitflow'`)
+  - Features: `git flow feature start <slug>` → work → `git flow feature finish <slug>` (branches from `develop`, merges back to `develop`)
+  - Releases: `release/<version>` from `develop` → merged to `main` with a version tag
+  - Hotfixes: `hotfix/<slug>` from `main`
+  - Fallback (no git-flow binary): create branches manually with the same prefixes (`feature/`, `bugfix/`, `release/`, `hotfix/`) and the same base/merge targets
+- **Conventional Commits are mandatory**: `feat:`, `fix:`, `docs:`, `test:`, `chore:`, `refactor:` with optional scope (e.g. `feat(engram): ...`)
+- Never commit directly to `main`; `develop` is the integration branch
+- Build, tests, and lint MUST pass before finishing a feature branch
+
 ## Build & Test
 
 ```bash
